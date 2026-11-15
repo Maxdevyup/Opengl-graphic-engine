@@ -2,6 +2,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include "shaderClass.h"
+#include "Camera.h"
 #include"VAO.h"
 #include"VBO.h"
 #include"EBO.h"
@@ -12,8 +13,8 @@
 
 
 
-int WindowH = 800;
-int WindowL = 800;
+int WindowWidth = 800;
+int WindowHeight = 800;
 
 
 
@@ -22,9 +23,9 @@ int main()
 {
 
 	//std::cout << "Set window height ? \n";
-	//std::cin >> WindowH;
+	//std::cin >> WindowWidth;
 	//std::cout << "Set window length ? \n";
-	//std::cin >> WindowL;
+	//std::cin >> WindowHeight;
 	//glfw info and init
 	glfwInit();
 	
@@ -54,7 +55,7 @@ int main()
 
 
 	//create a window
-	GLFWwindow* window = glfwCreateWindow(WindowH, WindowL, "window", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(WindowWidth, WindowHeight, "window", NULL, NULL);
 	//check error
 	if (window == NULL)
 	{
@@ -67,7 +68,7 @@ int main()
 	glfwMakeContextCurrent(window);
 	//initializing window
 	gladLoadGL();
-	glViewport(0, 0, WindowH, WindowL);
+	glViewport(0, 0, WindowWidth, WindowHeight);
 
 
 	Shader shaderprogram("default.vert", "default.frag");
@@ -88,40 +89,49 @@ int main()
 	VAO1.Unbind();
 	VBO1.Unbind();
 	EBO1.Unbind();
-	GLuint uniID = glGetUniformLocation(shaderprogram.ID, "scale");
 	//texture
-	int widthImg, heightImg, numColCh;
+	int widthImg = 0, heightImg = 0, numColCh = 0;
 	unsigned char* bytes = stbi_load("dirt.png", &widthImg, &heightImg, &numColCh, 0);
-	GLuint texture;
+	bool textureLoaded = bytes != nullptr;
+	GLuint texture = 0;
 	glGenTextures(1, &texture);
 
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texture);
+	if (textureLoaded)
+	{
+		GLenum format = numColCh == 4 ? GL_RGBA : numColCh == 3 ? GL_RGB : numColCh == 2 ? GL_RG : GL_RED;
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, texture);
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, widthImg, heightImg, 0, GL_RGB, GL_UNSIGNED_BYTE, bytes);
+		glTexImage2D(GL_TEXTURE_2D, 0, format, widthImg, heightImg, 0, format, GL_UNSIGNED_BYTE, bytes);
+		glGenerateMipmap(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+	else
+	{
+		std::cerr << "Impossible de charger dirt.png : " << stbi_failure_reason() << '\n';
+	}
 
-	glGenerateMipmap(GL_TEXTURE_2D);
-
-	//clean texture image
 	stbi_image_free(bytes);
-	glBindTexture(GL_TEXTURE_2D, 0);
-	//jsp
+	//texture sampler
 	GLuint tex0Uni = glGetUniformLocation(shaderprogram.ID, "tex0");
+	GLuint hasTextureUni = glGetUniformLocation(shaderprogram.ID, "hasTexture");
 	shaderprogram.Activate();
 	glUniform1i(tex0Uni, 0);
+	glUniform1i(hasTextureUni, textureLoaded ? 1 : 0);
 	
-	//rotation and rotation speed value
-	float rotation = 0.0f;
-	double prevtime = glfwGetTime();
-
+	
+	//depth buffer
 	glEnable(GL_DEPTH_TEST);
-	//window closing condition
+	//camera
+	Camera camera(WindowWidth, WindowHeight, glm::vec3(0.0f, 0.0f, 2.0f));
+
+	//Main while loop waiting the window to close
 	while (!glfwWindowShouldClose(window))
 	{
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
@@ -129,39 +139,11 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		//activate shader
 		shaderprogram.Activate();
-		//rotation schedul
-		double crntTime = glfwGetTime();
-		if (crntTime - prevtime >=  1.0/120.0)
-		{
-			rotation += 0.1f;
-			prevtime = crntTime;
-		}
-
-
-
-
-		//glm activation
-		glm::mat4 model = glm::mat4(1.0f);
-		glm::mat4 view = glm::mat4(1.0f);
-		glm::mat4 proj = glm::mat4(1.0f);
-		//model rotation
-		model = glm::rotate(model, glm::radians(rotation), glm::vec3(0.0f, 1.0f, 0.0f));
-		// view traslation
-		view = glm::translate(view, glm::vec3(0.0f, -0.5f, -2.0f));
-		//??
-		proj = glm::perspective(glm::radians(45.0f), (float) (WindowL / WindowH),0.1f,100.0f);
-		//locate model
-		int modelLoc = glGetUniformLocation(shaderprogram.ID, "model");
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		//locate view
-		int viewLoc = glGetUniformLocation(shaderprogram.ID, "view");
-		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
-		//locate model
-		int projLoc = glGetUniformLocation(shaderprogram.ID, "proj");
-		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(proj));
-	
-		glUniform1f(uniID, 0.5f);
-
+		//camera mouvement
+		camera.Inputs(window);
+		//camera
+		camera.Matrix(45.0f, 0.1f, 100.0f, shaderprogram, "camMatrix");
+		//bind texture
 		glBindTexture(GL_TEXTURE_2D, texture);
 
 		VAO1.Bind();
