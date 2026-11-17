@@ -10,11 +10,13 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include "Chunkgen.h"
 
 
 
-int WindowWidth = 800;
-int WindowHeight = 800;
+int WindowWidth = 1280;
+int WindowHeight = 720;
+
 
 
 
@@ -32,26 +34,6 @@ int main()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	// Vertices coordinates
-	GLfloat vertices[] =
-	{ //     COORDINATES     /        COLORS      /   TexCoord  //
-		-0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f,	0.0f, 0.0f,
-		-0.5f, 0.0f, -0.5f,     0.83f, 0.70f, 0.44f,	5.0f, 0.0f,
-		 0.5f, 0.0f, -0.5f,     0.83f, 0.70f, 0.44f,	0.0f, 0.0f,
-		 0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f,	5.0f, 0.0f,
-		 0.0f, 0.8f,  0.0f,     0.92f, 0.86f, 0.76f,	2.5f, 5.0f
-	};
-
-	// Indices for vertices order
-	GLuint indices[] =
-	{
-		0, 1, 2,
-		0, 2, 3,
-		0, 1, 4,
-		1, 2, 4,
-		2, 3, 4,
-		3, 0, 4
-	};
 
 
 	//create a window
@@ -68,27 +50,14 @@ int main()
 	glfwMakeContextCurrent(window);
 	//initializing window
 	gladLoadGL();
+	//load chunkgen constructor after OpenGL is initialized
+	Chunkgen chunk;
 	glViewport(0, 0, WindowWidth, WindowHeight);
+
 
 
 	Shader shaderprogram("default.vert", "default.frag");
 
-	VAO VAO1;
-	VAO1.Bind();
-
-	VBO VBO1(vertices, sizeof(vertices));
-
-	EBO EBO1(indices, sizeof(indices));
-	//link VAO
-
-	VAO1.LinkAttrib(VBO1, 0, 3, GL_FLOAT, 8 *sizeof(float),(void*)0);
-	VAO1.LinkAttrib(VBO1, 1, 3, GL_FLOAT, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-	VAO1.LinkAttrib(VBO1, 2, 2, GL_FLOAT, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-
-	//Unbind
-	VAO1.Unbind();
-	VBO1.Unbind();
-	EBO1.Unbind();
 	//texture
 	int widthImg = 0, heightImg = 0, numColCh = 0;
 	unsigned char* bytes = stbi_load("dirt.png", &widthImg, &heightImg, &numColCh, 0);
@@ -129,8 +98,8 @@ int main()
 	//depth buffer
 	glEnable(GL_DEPTH_TEST);
 	//camera
-	Camera camera(WindowWidth, WindowHeight, glm::vec3(0.0f, 0.0f, 2.0f));
-
+	Camera camera(WindowWidth, WindowHeight, glm::vec3(0.0f, 0.0f, 7.0f));
+	chunk.loadvertices();
 	//Main while loop waiting the window to close
 	while (!glfwWindowShouldClose(window))
 	{
@@ -146,19 +115,16 @@ int main()
 		//bind texture
 		glBindTexture(GL_TEXTURE_2D, texture);
 
-		VAO1.Bind();
 		//drawing elements
-		glDrawElements(GL_TRIANGLES, sizeof(indices)/sizeof(int), GL_UNSIGNED_INT, 0);
-
+		//glDrawElements(GL_TRIANGLES, sizeof(indices)/sizeof(int), GL_UNSIGNED_INT, 0);
+		chunk.Draw();
 		glfwSwapBuffers(window);
 
 		glfwPollEvents();
 
 	}
 	//destroying VBO,VAO,EBO and the shaderprogram 
-	VAO1.Delete();
-	VBO1.Delete();
-	EBO1.Delete();
+
 	glDeleteTextures(1, &texture);
 	shaderprogram.Delete();
 	
