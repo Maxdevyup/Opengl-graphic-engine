@@ -98,7 +98,7 @@ int main()
 	//depth buffer
 	glEnable(GL_DEPTH_TEST);
 	//camera
-	Camera camera(WindowWidth, WindowHeight, glm::vec3(0.0f, 0.0f, 7.0f));
+	Camera camera(WindowWidth, WindowHeight, glm::vec3(0.0f, 50.0f, 50.0f));
 	chunk.loadvertices();
 	//Main while loop waiting the window to close
 	while (!glfwWindowShouldClose(window))

@@ -14,7 +14,7 @@ class Chunkgen
 	private:
 		GLsizei m_indexcount = 0;
 		 VAO m_vao;
-		 int Chunksize = 16;
+		 int Chunksize = 100;
 		 struct vertexcube
 		 {
 			 float x, y, z;

@@ -2,6 +2,7 @@
 #include <glad/glad.h>
 #include <cstddef>
 #include <vector>
+#include "FastNoiseLite.h"
 
 Chunkgen::Chunkgen() = default;
 
@@ -66,19 +67,34 @@ void Chunkgen::loadvertices()
 		{20, 21, 23},
 		{20, 22, 23}
 	};
+	//noise setup
+	FastNoiseLite noise;
+	noise.SetNoiseType(FastNoiseLite::NoiseType_OpenSimplex2);
+	noise.SetFrequency(0.02f);
+
+	//noise.SetSeed();
+	//list vertices et indices
 	std::vector<vertexcube> vertices;
 	std::vector<triangles> indices;
+	//generation parameter
 	GLuint offset = 0;
 	GLuint positionx = 0;
 	GLuint positiony = 0;
 	GLuint positionz = 0;
-
+	int MaxYNoise = 10;
+	int chunknumber = 0;
+	int chunkcount = 0;
+	//generating block loop
 	for (int z = 0;z < Chunksize;z++)
 	{
-		for (int y = 0;y < Chunksize;y++)
+		for (int x = 0;x < Chunksize;x++)
 		{
-			for (int x = 0;x < Chunksize;x++)
+			float Chunkx = static_cast<float>(positionx);
+			float Chunky = static_cast<float>(positiony);
+			float Chunkz = static_cast<float>(positionz);
+			for (int y = 0;y < 1 + static_cast<GLuint>(std::round((noise.GetNoise(Chunkx, Chunkz) + 1) / 2 * MaxYNoise));y++)
 			{
+
 				for (int i = 0; i < 24; i++)
 				{
 					vertexcube cube = baseCube[i];
@@ -96,16 +112,18 @@ void Chunkgen::loadvertices()
 					cube.c += offset;
 					indices.push_back(cube);
 				}
-				positionx += 1;
+				positiony += 1;
 				offset += 24;
 			}
-			positiony += 1;
-			positionx = 0;
+			positionx += 1;
+			positiony = 0;
 		}
 		positionx = 0;
 		positiony = 0;
 		positionz += 1;
 	}
+
+	//loading vertices
 	m_indexcount = indices.size() * 3;
 	m_vao.Bind();
 	VBO VBO1((GLfloat*)vertices.data(), vertices.size() * sizeof(vertexcube));
@@ -120,6 +138,7 @@ void Chunkgen::loadvertices()
 	VBO1.Unbind();
 	EBO1.Unbind();
 }
+//draw
  void Chunkgen::Draw()
 {
 	m_vao.Bind();
