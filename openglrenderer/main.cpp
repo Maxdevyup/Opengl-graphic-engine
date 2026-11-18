@@ -35,7 +35,9 @@ int main()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-
+	//MSAA init
+	// unbale to use for to reson, performance (no delta time so moving is very slow) and atlas texture making it glith, i will test fxaa to fix the 1st one 
+	//glfwWindowHint(GLFW_SAMPLES, 4);
 	//create a window
 	GLFWwindow* window = glfwCreateWindow(WindowWidth, WindowHeight, "window", NULL, NULL);
 	//check error
@@ -50,6 +52,8 @@ int main()
 	glfwMakeContextCurrent(window);
 	//initializing window
 	gladLoadGL();
+	//MSAA ENABLED
+	glEnable(GL_MULTISAMPLE);
 	//load chunkgen constructor after OpenGL is initialized
 	Chunkgen chunk;
 	glViewport(0, 0, WindowWidth, WindowHeight);
@@ -58,9 +62,9 @@ int main()
 
 	Shader shaderprogram("default.vert", "default.frag");
 
-	//texture
+	// loading the texture
 	int widthImg = 0, heightImg = 0, numColCh = 0;
-	unsigned char* bytes = stbi_load("dirt.png", &widthImg, &heightImg, &numColCh, 0);
+	unsigned char* bytes = stbi_load("Atlas.png", &widthImg, &heightImg, &numColCh, 0);
 	bool textureLoaded = bytes != nullptr;
 	GLuint texture = 0;
 	glGenTextures(1, &texture);
@@ -70,20 +74,21 @@ int main()
 		GLenum format = numColCh == 4 ? GL_RGBA : numColCh == 3 ? GL_RGB : numColCh == 2 ? GL_RG : GL_RED;
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, texture);
-
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		// mipmap setting
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 2);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
+		// need to use Clamp to avoid other texture from the atlas glitching 
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		//texture
 		glTexImage2D(GL_TEXTURE_2D, 0, format, widthImg, heightImg, 0, format, GL_UNSIGNED_BYTE, bytes);
 		glGenerateMipmap(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 	else
 	{
-		std::cerr << "Impossible de charger dirt.png : " << stbi_failure_reason() << '\n';
+		std::cerr << "texture as failed to load : " << stbi_failure_reason() << '\n';
 	}
 
 	stbi_image_free(bytes);
@@ -98,7 +103,7 @@ int main()
 	//depth buffer
 	glEnable(GL_DEPTH_TEST);
 	//camera
-	Camera camera(WindowWidth, WindowHeight, glm::vec3(0.0f, 50.0f, 50.0f));
+	Camera camera(WindowWidth, WindowHeight, glm::vec3(0.0f, 12.0f, 105.0f));
 	chunk.loadvertices();
 	//Main while loop waiting the window to close
 	while (!glfwWindowShouldClose(window))

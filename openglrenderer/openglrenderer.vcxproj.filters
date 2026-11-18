@@ -76,9 +76,18 @@
     <ClInclude Include="Chunkgen.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\Downloads\FastNoiseLite.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\..\Downloads\dirt.png">
+      <Filter>Fichiers de ressources\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\..\Downloads\stone.png">
+      <Filter>Fichiers de ressources\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\..\Downloads\Atlas.png">
       <Filter>Fichiers de ressources\Textures</Filter>
     </Image>
   </ItemGroup>

@@ -173,6 +173,7 @@
     <ClInclude Include="VBO.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\..\..\..\Downloads\Atlas.png" />
     <Image Include="..\..\..\..\Downloads\dirt.png" />
     <Image Include="..\..\..\..\Downloads\stone.png" />
   </ItemGroup>

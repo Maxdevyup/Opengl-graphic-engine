@@ -16,39 +16,39 @@ void Chunkgen::loadvertices()
 	{
 		//face (south)
 		//   x     y       z     r    g    b      u     v
-		{ -0.5f, -0.5f,  0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f },
-		{  0.5f, -0.5f,  0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f },
+		{ -0.5f, -0.5f,  0.0f, 1.0f, 1.0f, 1.0f, 0.5f, 0.5f },
+		{  0.5f, -0.5f,  0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.5f },
 		{  0.5f,  0.5f,  0.0f, 0.83f, 0.70f, 0.44f, 1.0f, 1.0f },
-		{ -0.5f,  0.5f,  0.0f, 0.83f, 0.70f, 0.44f, 0.0f, 1.0f },
+		{ -0.5f,  0.5f,  0.0f, 0.83f, 0.70f, 0.44f, 0.5f, 1.0f },
 
 		//face (north)
-		{ -0.5f, -0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 0.0f, 0.0f },
-		{  0.5f, -0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 1.0f, 0.0f },
+		{ -0.5f, -0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 0.5f, 0.5f },
+		{  0.5f, -0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 1.0f, 0.5f },
 		{  0.5f,  0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 1.0f, 1.0f },
-		{ -0.5f,  0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 0.0f, 1.0f },
+		{ -0.5f,  0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 0.5f, 1.0f },
 
 		//face left (west)
-		{ -0.5f, -0.5f,  0.0f, 0.83f, 0.70f, 0.44f, 0.0f, 0.0f },
-		{ -0.5f, -0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 1.0f, 0.0f },
+		{ -0.5f, -0.5f,  0.0f, 0.83f, 0.70f, 0.44f, 0.5f, 0.5f },
+		{ -0.5f, -0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 1.0f, 0.5f },
 		{ -0.5f,  0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 1.0f, 1.0f },
-		{ -0.5f,  0.5f,  0.0f, 0.83f, 0.70f, 0.44f, 0.0f, 1.0f },
+		{ -0.5f,  0.5f,  0.0f, 0.83f, 0.70f, 0.44f, 0.5f, 1.0f },
 
 		//face right (east)
-		{  0.5f, -0.5f,  0.0f, 0.83f, 0.70f, 0.44f, 0.0f, 0.0f },
-		{  0.5f, -0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 1.0f, 0.0f },
+		{  0.5f, -0.5f,  0.0f, 0.83f, 0.70f, 0.44f, 0.5f, 0.5f },
+		{  0.5f, -0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 1.0f, 0.5f },
 		{  0.5f,  0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 1.0f, 1.0f },
-		{  0.5f,  0.5f,  0.0f, 0.83f, 0.70f, 0.44f, 0.0f, 1.0f },
+		{  0.5f,  0.5f,  0.0f, 0.83f, 0.70f, 0.44f, 0.5f, 1.0f },
 
 		//face down
-		{ -0.5f, -0.5f,  0.0f, 0.83f, 0.70f, 0.44f, 0.0f, 0.0f },
-		{  0.5f, -0.5f,  0.0f, 0.83f, 0.70f, 0.44f, 1.0f, 0.0f },
+		{ -0.5f, -0.5f,  0.0f, 0.83f, 0.70f, 0.44f, 0.5f, 0.5f },
+		{  0.5f, -0.5f,  0.0f, 0.83f, 0.70f, 0.44f, 1.0f, 0.5f },
 		{  0.5f, -0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 1.0f, 1.0f },
-		{ -0.5f, -0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 0.0f, 1.0f },
+		{ -0.5f, -0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 0.5f, 1.0f },
 
 		//face up
-		{  0.5f,  0.5f,  0.0f, 0.83f, 0.70f, 0.44f, 0.0f, 0.0f },
-		{ -0.5f,  0.5f,  0.0f, 0.83f, 0.70f, 0.44f, 1.0f, 0.0f },
-		{  0.5f,  0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 0.0f, 1.0f },
+		{  0.5f,  0.5f,  0.0f, 0.83f, 0.70f, 0.44f, 0.5f, 0.5f },
+		{ -0.5f,  0.5f,  0.0f, 0.83f, 0.70f, 0.44f, 1.0f, 0.5f },
+		{  0.5f,  0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 0.5f, 1.0f },
 		{ -0.5f,  0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 1.0f, 1.0f },
 	};
 
@@ -85,42 +85,55 @@ void Chunkgen::loadvertices()
 	int chunknumber = 0;
 	int chunkcount = 0;
 	//generating block loop
-	for (int z = 0;z < Chunksize;z++)
+	for (int s =0; s < Chunknbr;s++)
 	{
-		for (int x = 0;x < Chunksize;x++)
+		for (int z = 0;z < Chunksize;z++)
 		{
-			float Chunkx = static_cast<float>(positionx);
-			float Chunky = static_cast<float>(positiony);
-			float Chunkz = static_cast<float>(positionz);
-			for (int y = 0;y < 1 + static_cast<GLuint>(std::round((noise.GetNoise(Chunkx, Chunkz) + 1) / 2 * MaxYNoise));y++)
+			for (int x = 0;x < Chunksize;x++)
 			{
-
-				for (int i = 0; i < 24; i++)
+				float Chunkx = static_cast<float>(positionx);
+				float Chunky = static_cast<float>(positiony);
+				float Chunkz = static_cast<float>(positionz);
+				for (int y = 0;y < 1 + static_cast<GLuint>(std::round((noise.GetNoise(Chunkx, Chunkz) + 1) / 2 * MaxYNoise));y++)
 				{
-					vertexcube cube = baseCube[i];
-					cube.x += positionx;
-					cube.y += positiony;
-					cube.z += positionz;
-					vertices.push_back(cube);
 
+					for (int i = 0; i < 24; i++)
+					{
+						vertexcube cube = baseCube[i];
+						cube.x += positionx;
+						cube.y += positiony;
+						cube.z += positionz;
+						if (positiony < 1 + (std::round((noise.GetNoise(Chunkx, Chunkz) + 1) / 2 * MaxYNoise) - 3))
+						{
+							cube.u -= 0.51f;
+						}
+						if (positiony > 1 + (std::round((noise.GetNoise(Chunkx, Chunkz) + 1) / 2 * MaxYNoise) - 2))
+						{
+							cube.v -= 0.5f;
+						}
+						
+						vertices.push_back(cube);
+
+					}
+					for (int i = 0; i < 12;i++)
+					{
+						triangles cube = baseCubetriangle[i];
+						cube.a += offset;
+						cube.b += offset;
+						cube.c += offset;
+						indices.push_back(cube);
+					}
+					positiony += 1;
+					offset += 24;
 				}
-				for (int i = 0; i < 12;i++)
-				{
-					triangles cube = baseCubetriangle[i];
-					cube.a += offset;
-					cube.b += offset;
-					cube.c += offset;
-					indices.push_back(cube);
-				}
-				positiony += 1;
-				offset += 24;
+				positionx += 1;
+				positiony = 0;
 			}
-			positionx += 1;
+			positionx = 0;
 			positiony = 0;
+			positionz += 1;
 		}
-		positionx = 0;
-		positiony = 0;
-		positionz += 1;
+		
 	}
 
 	//loading vertices
