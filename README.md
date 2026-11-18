@@ -1,2 +1,2 @@
 # OpenGL graphic engine
-display a simple 2d texture of minecraft dirt( please mojang don't sue me)
+display a 3d chunk  of minecraft dirt( please mojang don't sue me)
