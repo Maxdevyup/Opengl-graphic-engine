@@ -81,12 +81,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\..\Downloads\dirt.png">
-      <Filter>Fichiers de ressources\Textures</Filter>
-    </Image>
-    <Image Include="..\..\..\..\Downloads\stone.png">
-      <Filter>Fichiers de ressources\Textures</Filter>
-    </Image>
     <Image Include="..\..\..\..\Downloads\Atlas.png">
       <Filter>Fichiers de ressources\Textures</Filter>
     </Image>

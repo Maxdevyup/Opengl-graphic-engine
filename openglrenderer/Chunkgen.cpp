@@ -3,6 +3,8 @@
 #include <cstddef>
 #include <vector>
 #include "FastNoiseLite.h"
+#include <cstdlib>
+#include <ctime>
 
 Chunkgen::Chunkgen() = default;
 
@@ -71,8 +73,8 @@ void Chunkgen::loadvertices()
 	FastNoiseLite noise;
 	noise.SetNoiseType(FastNoiseLite::NoiseType_OpenSimplex2);
 	noise.SetFrequency(0.02f);
-
-	//noise.SetSeed();
+	std::srand(static_cast<unsigned int>(std::time(nullptr)));
+	noise.SetSeed(rand());
 	//list vertices et indices
 	std::vector<vertexcube> vertices;
 	std::vector<triangles> indices;
@@ -82,58 +84,68 @@ void Chunkgen::loadvertices()
 	GLuint positiony = 0;
 	GLuint positionz = 0;
 	int MaxYNoise = 10;
-	int chunknumber = 0;
-	int chunkcount = 0;
-	//generating block loop
-	for (int s =0; s < Chunknbr;s++)
+	int genchunkz = 0;
+	int offsetx = 0;
+	int offsetz = 0;
+	//CHUNK generation for loop 
+	for (int n = 0;n < Chunknbr;n++)
 	{
-		for (int z = 0;z < Chunksize;z++)
+		for (int s = 0; s < Chunknbr;s++)
 		{
-			for (int x = 0;x < Chunksize;x++)
+			for (int z = 0;z < Chunksize;z++)
 			{
-				float Chunkx = static_cast<float>(positionx);
-				float Chunky = static_cast<float>(positiony);
-				float Chunkz = static_cast<float>(positionz);
-				for (int y = 0;y < 1 + static_cast<GLuint>(std::round((noise.GetNoise(Chunkx, Chunkz) + 1) / 2 * MaxYNoise));y++)
+				for (int x = 0;x < Chunksize;x++)
 				{
-
-					for (int i = 0; i < 24; i++)
+					float Chunkx = static_cast<float>(positionx + offsetx);
+					float Chunky = static_cast<float>(positiony);
+					float Chunkz = static_cast<float>(positionz + offsetz);
+					for (int y = 0;y < 1 + static_cast<GLuint>(std::round((noise.GetNoise(Chunkx, Chunkz) + 1) / 2 * MaxYNoise));y++)
 					{
-						vertexcube cube = baseCube[i];
-						cube.x += positionx;
-						cube.y += positiony;
-						cube.z += positionz;
-						if (positiony < 1 + (std::round((noise.GetNoise(Chunkx, Chunkz) + 1) / 2 * MaxYNoise) - 3))
-						{
-							cube.u -= 0.51f;
-						}
-						if (positiony > 1 + (std::round((noise.GetNoise(Chunkx, Chunkz) + 1) / 2 * MaxYNoise) - 2))
-						{
-							cube.v -= 0.5f;
-						}
-						
-						vertices.push_back(cube);
 
+						for (int i = 0; i < 24; i++)
+						{
+							vertexcube cube = baseCube[i];
+							cube.x += positionx + offsetx;
+							cube.y += positiony;
+							cube.z += positionz + offsetz;
+							if (positiony < 1 + (std::round((noise.GetNoise(Chunkx, Chunkz) + 1) / 2 * MaxYNoise) - 3))
+							{
+								cube.u -= 0.5f;
+							}
+							if (positiony > 1 + (std::round((noise.GetNoise(Chunkx, Chunkz) + 1) / 2 * MaxYNoise) - 2))
+							{
+								cube.v -= 0.5f;
+							}
+
+							vertices.push_back(cube);
+
+						}
+						if (true)
+						{
+							for (int i = 0; i < 12;i++)
+							{
+								triangles cube = baseCubetriangle[i];
+								cube.a += offset;
+								cube.b += offset;
+								cube.c += offset;
+								indices.push_back(cube);
+							}
+						}
+						positiony += 1;
+						offset += 24;
 					}
-					for (int i = 0; i < 12;i++)
-					{
-						triangles cube = baseCubetriangle[i];
-						cube.a += offset;
-						cube.b += offset;
-						cube.c += offset;
-						indices.push_back(cube);
-					}
-					positiony += 1;
-					offset += 24;
+					positionx += 1;
+					positiony = 0;
 				}
-				positionx += 1;
+				positionx = 0;
 				positiony = 0;
+				positionz += 1;
 			}
-			positionx = 0;
-			positiony = 0;
-			positionz += 1;
+			positionz = 0;
+			offsetx += Chunksize;
 		}
-		
+		offsetz += Chunksize;
+		offsetx = 0;
 	}
 
 	//loading vertices

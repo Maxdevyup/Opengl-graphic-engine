@@ -62,7 +62,7 @@ int main()
 
 	Shader shaderprogram("default.vert", "default.frag");
 
-	// loading the texture
+	//texture
 	int widthImg = 0, heightImg = 0, numColCh = 0;
 	unsigned char* bytes = stbi_load("Atlas.png", &widthImg, &heightImg, &numColCh, 0);
 	bool textureLoaded = bytes != nullptr;
@@ -103,7 +103,7 @@ int main()
 	//depth buffer
 	glEnable(GL_DEPTH_TEST);
 	//camera
-	Camera camera(WindowWidth, WindowHeight, glm::vec3(0.0f, 12.0f, 105.0f));
+	Camera camera(WindowWidth, WindowHeight, glm::vec3(0.0f, 12.0f, 10.0f));
 	chunk.loadvertices();
 	//Main while loop waiting the window to close
 	while (!glfwWindowShouldClose(window))
