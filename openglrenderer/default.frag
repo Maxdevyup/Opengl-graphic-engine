@@ -8,6 +8,15 @@ uniform bool hasTexture;
 
 void main()
 {
-	
-	FragColor = hasTexture ? texture(tex0, texCoord) : vec4(color, 1.0);
+	if (hasTexture)
+	{
+		vec4 texColor = texture(tex0, texCoord);
+		if (texColor.a < 0.1)
+			discard;
+		FragColor = texColor;
+	}
+	else
+	{
+		FragColor = vec4(color, 1.0);
+	}
 }

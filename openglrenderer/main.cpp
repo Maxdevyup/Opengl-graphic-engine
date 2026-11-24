@@ -11,6 +11,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "Chunkgen.h"
+#include <string>
 
 
 
@@ -98,7 +99,10 @@ int main()
 	shaderprogram.Activate();
 	glUniform1i(tex0Uni, 0);
 	glUniform1i(hasTextureUni, textureLoaded ? 1 : 0);
-	
+	//fps variable
+	double time = 0;
+	double prevtime = 0;
+	int fpscount = 0;
 	
 	//depth buffer
 	glEnable(GL_DEPTH_TEST);
@@ -108,6 +112,16 @@ int main()
 	//Main while loop waiting the window to close
 	while (!glfwWindowShouldClose(window))
 	{
+		fpscount += 1;
+		time = glfwGetTime();
+		if (time - prevtime >= 1.0)
+		{
+			std::string titlefpswindows = "OpenGL Engine " + std::to_string(fpscount) + " FPS";
+			glfwSetWindowTitle(window, titlefpswindows.c_str());
+			fpscount = 0;
+			prevtime = time;
+		}
+
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
