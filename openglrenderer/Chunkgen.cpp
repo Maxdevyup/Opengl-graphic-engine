@@ -18,40 +18,40 @@ void Chunkgen::loadvertices()
 	{
 		//face (south)
 		//   x     y       z     r    g    b      u     v
-		{ -0.5f, -0.5f,  0.0f, 1.0f, 1.0f, 1.0f, 0.5f, 0.5f },
-		{  0.5f, -0.5f,  0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.5f },
-		{  0.5f,  0.5f,  0.0f, 0.83f, 0.70f, 0.44f, 1.0f, 1.0f },
-		{ -0.5f,  0.5f,  0.0f, 0.83f, 0.70f, 0.44f, 0.5f, 1.0f },
+		{ -0.5f, -0.5f,  0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f/3.0f },
+		{  0.5f, -0.5f,  0.0f, 1.0f, 1.0f, 1.0f, 1.0f/3.0f, 1.0f/3.0f },
+		{  0.5f,  0.5f,  0.0f, 0.83f, 0.70f, 0.44f, 1.0f/3.0f, 2.0f/3.0f },
+		{ -0.5f,  0.5f,  0.0f, 0.83f, 0.70f, 0.44f, 0.0f, 2.0f/3.0f },
 
 		//face (north)
-		{ -0.5f, -0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 0.5f, 0.5f },
-		{  0.5f, -0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 1.0f, 0.5f },
-		{  0.5f,  0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 1.0f, 1.0f },
-		{ -0.5f,  0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 0.5f, 1.0f },
+		{ -0.5f, -0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 0.0f, 1.0f / 3.0f },
+		{  0.5f, -0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 1.0f / 3.0f, 1.0f / 3.0f },
+		{  0.5f,  0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 1.0f / 3.0f, 2.0f / 3.0f},
+		{ -0.5f,  0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 0.0f, 2.0f / 3.0f },
 
 		//face left (west)
-		{ -0.5f, -0.5f,  0.0f, 0.83f, 0.70f, 0.44f, 0.5f, 0.5f },
-		{ -0.5f, -0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 1.0f, 0.5f },
-		{ -0.5f,  0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 1.0f, 1.0f },
-		{ -0.5f,  0.5f,  0.0f, 0.83f, 0.70f, 0.44f, 0.5f, 1.0f },
+		{ -0.5f, -0.5f,  0.0f, 0.83f, 0.70f, 0.44f, 0.0f, 1.0f / 3.0f },
+		{ -0.5f, -0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 1.0f / 3.0f, 1.0f / 3.0f },
+		{ -0.5f,  0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 1.0f / 3.0f, 2.0f / 3.0f },
+		{ -0.5f,  0.5f,  0.0f, 0.83f, 0.70f, 0.44f, 0.0f, 2.0f / 3.0f },
 
 		//face right (east)
-		{  0.5f, -0.5f,  0.0f, 0.83f, 0.70f, 0.44f, 0.5f, 0.5f },
-		{  0.5f, -0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 1.0f, 0.5f },
-		{  0.5f,  0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 1.0f, 1.0f },
-		{  0.5f,  0.5f,  0.0f, 0.83f, 0.70f, 0.44f, 0.5f, 1.0f },
+		{  0.5f, -0.5f,  0.0f, 0.83f, 0.70f, 0.44f, 0.0f, 1.0f / 3.0f },
+		{  0.5f, -0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 1.0f / 3.0f, 1.0f / 3.0f},
+		{  0.5f,  0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 1.0f / 3.0f, 2.0f / 3.0f },
+		{  0.5f,  0.5f,  0.0f, 0.83f, 0.70f, 0.44f, 0.0f, 2.0f / 3.0f},
 
 		//face down
-		{ -0.5f, -0.5f,  0.0f, 0.83f, 0.70f, 0.44f, 0.5f, 0.5f },
-		{  0.5f, -0.5f,  0.0f, 0.83f, 0.70f, 0.44f, 1.0f, 0.5f },
-		{  0.5f, -0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 1.0f, 1.0f },
-		{ -0.5f, -0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 0.5f, 1.0f },
+		{ -0.5f, -0.5f,  0.0f, 0.83f, 0.70f, 0.44f, 0.0f, 1.0f / 3.0f },
+		{  0.5f, -0.5f,  0.0f, 0.83f, 0.70f, 0.44f, 1.0f / 3.0f, 1.0f / 3.0f },
+		{  0.5f, -0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 1.0f / 3.0f, 2.0f / 3.0f },
+		{ -0.5f, -0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 0.0f, 2.0f / 3.0f },
 
 		//face up
-		{  0.5f,  0.5f,  0.0f, 0.83f, 0.70f, 0.44f, 0.5f, 0.5f },
-		{ -0.5f,  0.5f,  0.0f, 0.83f, 0.70f, 0.44f, 1.0f, 0.5f },
-		{  0.5f,  0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 0.5f, 1.0f },
-		{ -0.5f,  0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 1.0f, 1.0f },
+		{ -0.5f,  0.5f,  0.0f, 0.83f, 0.70f, 0.44f, 0.0f, 1.0f / 3.0f },
+		{  0.5f,  0.5f,  0.0f, 0.83f, 0.70f, 0.44f, 1.0f / 3.0f, 1.0f / 3.0f },
+		{  0.5f,  0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 1.0f / 3.0f, 2.0f / 3.0f },
+		{ -0.5f,  0.5f, -1.0f, 0.83f, 0.70f, 0.44f, 0.0f, 2.0f / 3.0f },
 	};
 
 	triangles baseCubetriangle[12]
@@ -67,7 +67,7 @@ void Chunkgen::loadvertices()
 		{16, 17, 19},
 		{17, 19, 18},
 		{20, 21, 23},
-		{20, 22, 23}
+		{21, 22, 23}
 	};
 	//noise setup
 	FastNoiseLite noise;
@@ -87,7 +87,7 @@ void Chunkgen::loadvertices()
 	int genchunkz = 0;
 	int offsetx = 0;
 	int offsetz = 0;
-	//CHUNK generation for loop 
+	//Surface CHUNK generation for loop 
 	for (int n = 0;n < Chunknbr;n++)
 	{
 		for (int s = 0; s < Chunknbr;s++)
@@ -110,25 +110,45 @@ void Chunkgen::loadvertices()
 							cube.z += positionz + offsetz;
 							if (positiony < 1 + (std::round((noise.GetNoise(Chunkx, Chunkz) + 1) / 2 * MaxYNoise) - 3))
 							{
-								cube.u -= 0.5f;
+								cube.u += 1.0f/3.0f;
+								cube.v -= 1.0f / 3.0f;
 							}
 							if (positiony > 1 + (std::round((noise.GetNoise(Chunkx, Chunkz) + 1) / 2 * MaxYNoise) - 2))
 							{
-								cube.v -= 0.5f;
+								cube.v -= 1.0f/3.0f;
 							}
 
 							vertices.push_back(cube);
 
 						}
-						if (true)
+						// using noise to know where the cubes are
+						GLuint height = 1 + static_cast<GLuint>(std::round((noise.GetNoise(Chunkx, Chunkz) + 1) / 2 * MaxYNoise));
+						GLuint heightXMinus = 1 + static_cast<GLuint>(std::round((noise.GetNoise(Chunkx - 1, Chunkz) + 1) / 2 * MaxYNoise));
+						GLuint heightXPlus = 1 + static_cast<GLuint>(std::round((noise.GetNoise(Chunkx + 1, Chunkz) + 1) / 2 * MaxYNoise));
+						GLuint heightZMinus = 1 + static_cast<GLuint>(std::round((noise.GetNoise(Chunkx, Chunkz - 1) + 1) / 2 * MaxYNoise));
+						GLuint heightZPlus = 1 + static_cast<GLuint>(std::round((noise.GetNoise(Chunkx, Chunkz + 1) + 1) / 2 * MaxYNoise));
+						//culling ( mostly generated by ai, my little brain can handle this fucking things)
+						bool visibleFaces[6] =
 						{
-							for (int i = 0; i < 12;i++)
+							positionz + offsetz == Chunksize * Chunknbr - 1 || heightZPlus <= positiony,
+							positionz + offsetz == 0 || heightZMinus <= positiony,
+							positionx + offsetx == 0 || heightXMinus <= positiony,
+							positionx + offsetx == Chunksize * Chunknbr - 1 || heightXPlus <= positiony,
+							positiony == 0,
+							positiony == height - 1
+						};
+						for (int face = 0; face < 6; face++)
+						{
+							if (visibleFaces[face])
 							{
-								triangles cube = baseCubetriangle[i];
-								cube.a += offset;
-								cube.b += offset;
-								cube.c += offset;
-								indices.push_back(cube);
+								for (int i = face * 2; i < face * 2 + 2; i++)
+								{
+									triangles cube = baseCubetriangle[i];
+									cube.a += offset;
+									cube.b += offset;
+									cube.c += offset;
+									indices.push_back(cube);
+								}
 							}
 						}
 						positiony += 1;
@@ -147,6 +167,95 @@ void Chunkgen::loadvertices()
 		offsetz += Chunksize;
 		offsetx = 0;
 	}
+	// tree gen
+	FastNoiseLite noisetree;
+	noisetree.SetNoiseType(FastNoiseLite::NoiseType_OpenSimplex2);
+	noisetree.SetFrequency(0.5f);
+	std::srand(static_cast<unsigned int>(std::time(nullptr)));
+	noisetree.SetSeed(rand());
+	int offsettree = 0;
+	int talltree = 3;
+	int offsettreex = 0;
+	int offsettreez = 0;
+	for (int v = 0;v < Chunknbr;v++)
+	{
+		for (int f = 0;f < Chunknbr;f++)
+		{
+			for (int x = 0;x < Chunksize;x++)
+			{
+				for (int z = 0; z < Chunksize;z++)
+				{
+					if (noisetree.GetNoise(static_cast<float>(x + offsettreex), static_cast<float>(z + offsettreez)) > 0.95)
+					{
+						//generate tree tronk
+						for (int t = 0; t < talltree;t++)
+						{
+							for (int i = 0; i < 16; i++)
+							{
+								vertexcube cube = baseCube[i];
+								cube.x += x + offsettreex;
+								cube.y += std::round(((noise.GetNoise(static_cast<float>(x + offsettreex), static_cast<float>(z + offsettreez)) + 1) / 2 * MaxYNoise) + 1) + t;
+								cube.z += z + offsettreez;
+								cube.u += 2.0f / 3.0f;
+								cube.v -= 1.0f / 3.0f;
+								vertices.push_back(cube);
+							}
+							for (int i = 0; i < 8; i++)
+							{
+								vertexcube cube = baseCube[16 + i];
+								cube.x += x + offsettreex;
+								cube.y += std::round(((noise.GetNoise(static_cast<float>(x + offsettreex), static_cast<float>(z + offsettreez)) + 1) / 2 * MaxYNoise) + 1) + t;
+								cube.z += z + offsettreez;
+								cube.u += 1.0f / 3.0f;
+								cube.v += 1.0f / 3.0f;
+								vertices.push_back(cube);
+							}
+							for (int i = 0; i < 12; i++)
+							{
+								triangles cube = baseCubetriangle[i];
+								cube.a += offset + offsettree;
+								cube.b += offset + offsettree;
+								cube.c += offset + offsettree;
+								indices.push_back(cube);
+							}
+							offsettree += 24;
+						}
+						
+						for (int l = 0; l < 3;l++)
+						{
+							for (int i = 0; i < 24; i++)
+							{
+								vertexcube cube = baseCube[i];
+								cube.x += x + offsettreex;
+								cube.y += std::round(((noise.GetNoise(static_cast<float>(x + offsettreex), static_cast<float>(z + offsettreez)) + 1) / 2 * MaxYNoise) + 1) + talltree;
+								cube.z += z + offsettreez;
+								cube.u += 2.0f / 3.0f;
+								cube.v += 1.0f / 3.0f;
+								vertices.push_back(cube);
+							}
+
+							for (int i = 0; i < 12; i++)
+							{
+								triangles cube = baseCubetriangle[i];
+								cube.a += offset + offsettree;
+								cube.b += offset + offsettree;
+								cube.c += offset + offsettree;
+								indices.push_back(cube);
+							}
+							offsettree += 24;
+						}
+						
+					}
+
+				}
+			}
+			offsettreex += Chunksize;
+		}
+		offsettreez += Chunksize;
+		offsettreex = 0;
+	}
+	
+	
 
 	//loading vertices
 	m_indexcount = indices.size() * 3;
