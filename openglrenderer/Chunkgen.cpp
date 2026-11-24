@@ -174,7 +174,8 @@ void Chunkgen::loadvertices()
 	std::srand(static_cast<unsigned int>(std::time(nullptr)));
 	noisetree.SetSeed(rand());
 	int offsettree = 0;
-	int talltree = 3;
+	int treeheight = 2;
+	int leavesheight = 2;
 	int offsettreex = 0;
 	int offsettreez = 0;
 	for (int v = 0;v < Chunknbr;v++)
@@ -188,7 +189,7 @@ void Chunkgen::loadvertices()
 					if (noisetree.GetNoise(static_cast<float>(x + offsettreex), static_cast<float>(z + offsettreez)) > 0.95)
 					{
 						//generate tree tronk
-						for (int t = 0; t < talltree;t++)
+						for (int t = 0; t < treeheight;t++)
 						{
 							for (int i = 0; i < 16; i++)
 							{
@@ -220,30 +221,75 @@ void Chunkgen::loadvertices()
 							}
 							offsettree += 24;
 						}
-						
-						for (int l = 0; l < 3;l++)
-						{
-							for (int i = 0; i < 24; i++)
+						//generate leaves
+							int xdrawleaves = -1;
+							int zdrawleaves = 0;
+							int ydrawleaves = 0;
+							for (int ly = 0; ly<leavesheight;ly++)
 							{
-								vertexcube cube = baseCube[i];
-								cube.x += x + offsettreex;
-								cube.y += std::round(((noise.GetNoise(static_cast<float>(x + offsettreex), static_cast<float>(z + offsettreez)) + 1) / 2 * MaxYNoise) + 1) + talltree;
-								cube.z += z + offsettreez;
-								cube.u += 2.0f / 3.0f;
-								cube.v += 1.0f / 3.0f;
-								vertices.push_back(cube);
-							}
+								for (int lx = 0; lx < 3;lx++)
+								{
+									for (int lz = 0;lz < 3;lz++)
+									{
+										if (ly < leavesheight)
+										{
+											for (int i = 0; i < 24; i++)
+											{
+												vertexcube cube = baseCube[i];
+												cube.x += x + offsettreex +lx -1;
+												cube.y += std::round(((noise.GetNoise(static_cast<float>(x + offsettreex), static_cast<float>(z + offsettreez)) + 1) / 2 * MaxYNoise) + 1) + treeheight;
+												cube.z += z + offsettreez +lz -1;
+												cube.u += 2.0f / 3.0f;
+												cube.v += 1.0f / 3.0f;
+												vertices.push_back(cube);
+											}
 
-							for (int i = 0; i < 12; i++)
-							{
-								triangles cube = baseCubetriangle[i];
-								cube.a += offset + offsettree;
-								cube.b += offset + offsettree;
-								cube.c += offset + offsettree;
-								indices.push_back(cube);
+											for (int i = 0; i < 12; i++)
+											{
+												triangles cube = baseCubetriangle[i];
+												cube.a += offset + offsettree;
+												cube.b += offset + offsettree;
+												cube.c += offset + offsettree;
+												indices.push_back(cube);
+											}
+											offsettree += 24;
+										}
+										
+									}
+								}
+
+
 							}
-							offsettree += 24;
-						}
+							//generate cross
+							for (int lx = 0; lx < 3; lx++)
+							{
+								for (int lz = 0; lz < 3; lz++)
+								{
+									if (lx == 1 || lz == 1)
+									{
+										for (int i = 0; i < 24; i++)
+										{
+											vertexcube cube = baseCube[i];
+											cube.x += x + offsettreex + lx - 1;
+											cube.y += std::round(((noise.GetNoise(static_cast<float>(x + offsettreex), static_cast<float>(z + offsettreez)) + 1) / 2 * MaxYNoise) + 1) + treeheight + leavesheight -1;
+											cube.z += z + offsettreez + lz - 1;
+											cube.u += 2.0f / 3.0f;
+											cube.v += 1.0f / 3.0f;
+											vertices.push_back(cube);
+										}
+
+										for (int i = 0; i < 12; i++)
+										{
+											triangles cube = baseCubetriangle[i];
+											cube.a += offset + offsettree;
+											cube.b += offset + offsettree;
+											cube.c += offset + offsettree;
+											indices.push_back(cube);
+										}
+										offsettree += 24;
+									}
+								}
+							}
 						
 					}
 
