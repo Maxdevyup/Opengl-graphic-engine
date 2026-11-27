@@ -20,7 +20,7 @@ class Camera {
 	int height;
 	int width;
 
-	float speed = 0.01f;
+	float speed = 0.1f;
 	float sensitivity = 150.0f;
 
 public:

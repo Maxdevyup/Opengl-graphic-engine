@@ -37,7 +37,7 @@ int main()
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	//MSAA init
-	// unbale to use for to reson, performance (no delta time so moving is very slow) and atlas texture making it glith, i will test fxaa to fix the 1st one 
+	// unbale to use for two reson, performance (no delta time so moving is very slow) and atlas texture making it glith, i will test fxaa to fix the 1st one 
 	//glfwWindowHint(GLFW_SAMPLES, 4);
 	//create a window
 	GLFWwindow* window = glfwCreateWindow(WindowWidth, WindowHeight, "window", NULL, NULL);
@@ -54,7 +54,7 @@ int main()
 	//initializing window
 	gladLoadGL();
 	//MSAA ENABLED
-	glEnable(GL_MULTISAMPLE);
+	//glEnable(GL_MULTISAMPLE);
 	//load chunkgen constructor after OpenGL is initialized
 	Chunkgen chunk;
 	glViewport(0, 0, WindowWidth, WindowHeight);
@@ -99,10 +99,14 @@ int main()
 	shaderprogram.Activate();
 	glUniform1i(tex0Uni, 0);
 	glUniform1i(hasTextureUni, textureLoaded ? 1 : 0);
-	//fps variable
+	//real time
 	double time = 0;
-	double prevtime = 0;
+
+	//fps variable
+	double prevtimefps = 0;
 	int fpscount = 0;
+	//tick variable
+	double prevtime = 0;
 	
 	//depth buffer
 	glEnable(GL_DEPTH_TEST);
@@ -112,15 +116,23 @@ int main()
 	//Main while loop waiting the window to close
 	while (!glfwWindowShouldClose(window))
 	{
+		//fps counter
 		fpscount += 1;
 		time = glfwGetTime();
-		if (time - prevtime >= 1.0)
+		if (time - prevtimefps >= 1.0)
 		{
 			std::string titlefpswindows = "OpenGL Engine " + std::to_string(fpscount) + " FPS";
 			glfwSetWindowTitle(window, titlefpswindows.c_str());
 			fpscount = 0;
+			prevtimefps = time;
+		}
+		//ticks 1 ticks in 0.2s
+		if (time - prevtime >= 0.01)
+		{
+			camera.Inputs(window);
 			prevtime = time;
 		}
+
 
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 
@@ -128,7 +140,7 @@ int main()
 		//activate shader
 		shaderprogram.Activate();
 		//camera mouvement
-		camera.Inputs(window);
+		//camera.Inputs(window);
 		//camera
 		camera.Matrix(45.0f, 0.1f, 100.0f, shaderprogram, "camMatrix");
 		//bind texture

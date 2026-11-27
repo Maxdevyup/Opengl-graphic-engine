@@ -5,6 +5,9 @@ in vec3 color;
 in vec2 texCoord;
 uniform sampler2D tex0;
 uniform bool hasTexture;
+uniform  vec3 lightcolor;
+uniform vec3 lightpos;
+in vec3 Fragpos;
 
 void main()
 {
